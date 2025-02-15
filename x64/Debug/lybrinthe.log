@@ -1,0 +1,189 @@
+﻿  DifficultyMenu.cpp
+  lybrinthe.cpp
+  MainMenu.cpp
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,82): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(63,70): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,84): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(74,72): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,83): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(80,71): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,81): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\MainMenu.cpp(86,69): warning C4244:         ]
+  OptionsMenu.cpp
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,87): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(49,75): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,81): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:             T=int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         and
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\OptionsMenu.cpp(55,69): warning C4244:         ]
+  Test.cpp
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(55,14): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(55,34): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(116,14): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(117,14): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(167,16): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(168,20): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(248,11): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(303,39): warning C4267: '+=' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,81): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,81): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,81): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,81): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,81): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,51): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,51): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,51): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,51): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(331,51): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,83): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,83): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,83): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,83): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,83): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,53): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,53): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,53): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,53): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(340,53): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,75): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,75): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,75): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,75): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,75): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,50): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,50): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,50): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,50): warning C4244:             T=unsigned int
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(348,50): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(364,89): warning C4267: 'argument' : conversion de 'size_t' en 'unsigned int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(364,70): warning C4267: 'argument' : conversion de 'size_t' en 'unsigned int', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(392,85): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(392,55): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(400,89): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(400,59): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,97): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,97): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,97): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,97): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,97): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,76): warning C4244: 'argument' : conversion de 'int' en 'T', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,76): warning C4244:         with
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,76): warning C4244:         [
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,76): warning C4244:             T=float
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(414,76): warning C4244:         ]
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(526,51): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(526,36): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(545,71): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(545,52): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(554,64): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(554,41): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(567,79): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(567,50): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(576,76): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(576,49): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(584,73): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(584,45): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(595,53): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(606,58): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(616,61): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(627,94): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(627,64): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(636,87): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(636,57): warning C4244: 'argument' : conversion de 'unsigned __int64' en 'float', perte possible de données
+C:\Users\hp\source\repos\lybrinthe\lybrinthe\Test.cpp(649,15): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
+  Génération de code en cours...
+  lybrinthe.vcxproj -> C:\Users\hp\source\repos\lybrinthe\x64\Debug\lybrinthe.exe
