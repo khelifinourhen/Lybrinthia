@@ -11,12 +11,9 @@
 #include <vector>
 #include <ctime>
 #include "OptionsMenu.hpp"
-#include "mainMenu.hpp"
-#include "DifficultyMenu.hpp"
 #include "Constants.hpp"
-
 using namespace std;
-
+int score=0;
 // Structure pour stocker les informations d'un nœud dans la file de priorité
 struct Node {
     int index;
@@ -37,6 +34,8 @@ vector<string> readWordsFromFile(const string& filename) {
     vector<string> words;
     string word;
     while (file >> word) {
+        // Convertir le mot en minuscules
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
         words.push_back(word);
     }
     return words;
@@ -47,6 +46,14 @@ void shuffleDirections(int directions[8][2]) {
     for (int i = 7; i > 0; --i) {
         int j = rand() % (i + 1);
         swap(directions[i], directions[j]);
+    }
+}
+
+// Fonction pour afficher le chemin dans le labyrinthe
+void displayPath(vector<vector<Cell>>& maze, const vector<int>& path) {
+    for (int index : path) {
+        pair<int, int> pos = indexToPosition[index];
+        maze[pos.first][pos.second].type = PATH;
     }
 }
 
@@ -90,6 +97,14 @@ void placeWords(vector<vector<Cell>>& maze, const vector<string>& words) {
             }
         }
     }
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (maze[i][j].type == PATH && maze[i][j].letter == ' ') {
+                maze[i][j].letter = 'a' + rand() % 26;
+
+            }
+        }
+    }
 }
 
 // Fonction pour générer le labyrinthe
@@ -111,7 +126,7 @@ void generateMaze(vector<vector<Cell>>& maze, int x, int y) {
     }
 }
 
-// Fonction pour construire le graphe
+// conversion du labyrinthe d'une matrice à un graph
 void buildGraph(const vector<vector<Cell>>& maze) {
     int rows = maze.size();
     int cols = maze[0].size();
@@ -243,7 +258,6 @@ vector<FoundWord> findWords(const pair<int, int>& currentPos,
     return foundWords;
 }
 
-// Fonction pour appliquer l'algorithme de Dijkstra
 vector<int> dijkstra(int start, int end) {
     int n = adjacencyMatrix.size();
     vector<int> dist(n, INT_MAX);
@@ -261,7 +275,7 @@ vector<int> dijkstra(int start, int end) {
 
         for (int neighbor = 0; neighbor < n; ++neighbor) {
             if (adjacencyMatrix[current.index][neighbor] == 1) {
-                int newDist = dist[current.index] + 1; // Poids de l'arête est 1
+                int newDist = dist[current.index] + 1;
                 if (newDist < dist[neighbor]) {
                     dist[neighbor] = newDist;
                     prev[neighbor] = current.index;
@@ -271,96 +285,184 @@ vector<int> dijkstra(int start, int end) {
         }
     }
 
-    // Récupération du chemin
+    // Reconstruire le chemin sous forme d'indices
     vector<int> path;
     for (int at = end; at != -1; at = prev[at]) {
         path.push_back(at);
     }
     reverse(path.begin(), path.end());
-
-    // Si le chemin trouvé est vide ou commence par un autre nœud que start, il n'existe pas
-    if (path.empty() || path[0] != start) {
-        return {};
-    }
-
     return path;
 }
 
-// Fonction pour afficher le chemin dans le labyrinthe
-void displayPath(vector<vector<Cell>>& maze, const vector<int>& path) {
-    for (int index : path) {
-        pair<int, int> pos = indexToPosition[index];
-        maze[pos.first][pos.second].letter = '*'; // Marquer le chemin avec '*'
-    }
-}
-
 // Fonction pour calculer le score
-int calculateScore(const vector<FoundWord>& foundWords, const vector<int>& shortestPath, const vector<pair<int, int>>& playerPath) {
-    int score = 0;
 
-    // 1. Ajouter la longueur des mots trouvés au score
+int calculateScore_words(const vector<FoundWord>& foundWords, const vector<int>& shortestPath, const vector<pair<int, int>>& playerPath) {
+   
+
     for (const auto& foundWord : foundWords) {
-        score += foundWord.word.length(); // Chaque lettre du mot rapporte 1 point
-    }
-
-    // 2. Calculer un bonus en fonction du chemin parcouru par rapport au plus court chemin
-    if (!shortestPath.empty()) {
-        // Calculer le ratio entre la longueur du chemin du joueur et celle du plus court chemin
-        float pathRatio = static_cast<float>(playerPath.size()) / shortestPath.size();
-
-        // Si le joueur suit un chemin plus long, le ratio sera supérieur à 1
-        // On peut ajuster le bonus en fonction de ce ratio
-        if (pathRatio <= 1.0f) {
-            // Si le joueur suit un chemin plus court ou égal au plus court chemin, il reçoit un bonus maximal
-            score += 100; // Bonus fixe pour avoir suivi le chemin optimal
-        }
-        else {
-            // Sinon, le bonus diminue proportionnellement à l'écart par rapport au plus court chemin
-            score += static_cast<int>(100 / pathRatio); // Bonus réduit
-        }
+        score += foundWord.word.length();
+        cout << "visité";
     }
 
     return score;
 }
+int calculateScore_path( const vector<int>& shortestPath, const vector<pair<int, int>>& playerPath) {
+    
+    if (!shortestPath.empty()) {
+        cout << shortestPath.empty();
+        int shortestPathLength = shortestPath.size();
+        int playerPathLength = playerPath.size();
 
+        if (playerPathLength == shortestPathLength) {
+            // Si le joueur suit un chemin plus court ou égal au plus court chemin, il reçoit un bonus maximal
+            score += 100; // Bonus fixe pour avoir suivi le chemin optimal
+        }
+        else if (playerPathLength <= shortestPathLength + 5) {
+            score += 80; // Bonus légèrement réduit si le chemin est légèrement plus long
+        }
+        else {
+            score += 40; // Bonus minimal si le chemin est significativement plus long
+        }
+    }
+    cout << "score" << score;
+    return score;
+}
 // Fonction pour afficher le message de "Game Over" avec le score
-void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score) {
-    // Créer un rectangle pour l'arrière-plan du message
-    sf::RectangleShape background(sf::Vector2f(400, 200));
-    background.setFillColor(sf::Color(0, 0, 0, 200)); // Noir semi-transparent
-    background.setPosition(window.getSize().x / 2 - 200, window.getSize().y / 2 - 100);
+// Fonction pour afficher le message de "Game Over" avec le score
+void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
+    const vector<FoundWord>& foundWords, const vector<pair<int, int>>& playerPath,
+    const vector<int>& shortestPath, bool reachedEnd) {
 
-    // Créer le texte "Game Over"
+    // Créer un rectangle pour l'arrière-plan du message
+    sf::RectangleShape background(sf::Vector2f(600, 500));
+    background.setFillColor(sf::Color(0, 0, 0, 230)); // Noir plus opaque
+    background.setPosition(window.getSize().x / 2 - 300, window.getSize().y / 2 - 250);
+
+    // Texte "Game Over"
     sf::Text gameOverText;
     gameOverText.setFont(font);
     gameOverText.setString("Game Over!");
     gameOverText.setCharacterSize(50);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setStyle(sf::Text::Bold);
-    gameOverText.setPosition(window.getSize().x / 2 - 120, window.getSize().y / 2 - 70);
+    gameOverText.setPosition(window.getSize().x / 2 - 120, window.getSize().y / 2 - 220);
 
-    // Créer le texte du score
+    // Score final
     sf::Text scoreText;
     scoreText.setFont(font);
-    scoreText.setString("Score: " + to_string(score));
-    scoreText.setCharacterSize(40);
+    scoreText.setString("Score Final: " + to_string(score));
+    scoreText.setCharacterSize(30);
     scoreText.setFillColor(sf::Color::White);
-    scoreText.setPosition(window.getSize().x / 2 - 80, window.getSize().y / 2);
+    scoreText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 150);
 
-    // Afficher les éléments
-    window.clear();
-    window.draw(background);
-    window.draw(gameOverText);
-    window.draw(scoreText);
-    window.display();
+    // Nombre de pas
+    sf::Text stepsText;
+    stepsText.setFont(font);
+    stepsText.setString("Nombre de pas: " + to_string(playerPath.size()));
+    stepsText.setCharacterSize(30);
+    stepsText.setFillColor(sf::Color::White);
+    stepsText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 100);
 
-    // Attendre 3 secondes avant de fermer la fenêtre
-    sf::sleep(sf::seconds(3));
-    window.close();
+    // Longueur du chemin le plus court
+    sf::Text shortestPathText;
+    shortestPathText.setFont(font);
+    shortestPathText.setString("Longueur du chemin optimal: " + to_string(shortestPath.size()));
+    shortestPathText.setCharacterSize(30);
+    shortestPathText.setFillColor(sf::Color::White);
+    shortestPathText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 50);
+
+    // Label "Status du chemin"
+    sf::Text statusLabel;
+    statusLabel.setFont(font);
+    statusLabel.setString("Status du chemin: ");
+    statusLabel.setCharacterSize(30);
+    statusLabel.setFillColor(sf::Color::White);
+    statusLabel.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2);
+
+    // Statut du chemin (résultat)
+    sf::Text pathStatusText;
+    pathStatusText.setFont(font);
+    string pathStatus;
+    if (reachedEnd) {
+        if (playerPath.size() == shortestPath.size()) {
+            pathStatus = "Optimal !";
+            pathStatusText.setFillColor(sf::Color::Green);
+        }
+        else {
+            pathStatus = "Non optimal";
+            pathStatusText.setFillColor(sf::Color::Yellow);
+        }
+    }
+    else {
+        pathStatus = "Non atteint";
+        pathStatusText.setFillColor(sf::Color::Red);
+    }
+    pathStatusText.setString(pathStatus);
+    pathStatusText.setCharacterSize(30); // Même taille que les autres textes
+    // Calculer la position du statusLabel pour obtenir sa largeur
+    float labelWidth = statusLabel.getLocalBounds().width;
+    // Positionner le texte de statut juste après le label avec un petit espace
+    pathStatusText.setPosition(window.getSize().x / 2 - 250 + labelWidth + 10, window.getSize().y / 2 + 2);
+
+
+    // Mots collectés
+    sf::Text wordsTitle;
+    wordsTitle.setFont(font);
+    wordsTitle.setString("Mots collectés:");
+    wordsTitle.setCharacterSize(30);
+    wordsTitle.setFillColor(sf::Color::White);
+    wordsTitle.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 + 50);
+
+    // Liste des mots
+    vector<sf::Text> wordTexts;
+    float yOffset = window.getSize().y / 2 + 90;
+    for (const auto& word : foundWords) {
+        sf::Text wordText;
+        wordText.setFont(font);
+        wordText.setString("- " + word.word + " (" + to_string(word.word.length()) + " points)");
+        wordText.setCharacterSize(20);
+        wordText.setFillColor(sf::Color::White);
+        wordText.setPosition(window.getSize().x / 2 - 230, yOffset);
+        wordTexts.push_back(wordText);
+        yOffset += 30;
+    }
+
+    bool isClosed = false;
+
+    while (!isClosed) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed ||
+                event.type == sf::Event::KeyPressed) {
+                window.close();
+                isClosed = true;
+            }
+        }
+
+        window.clear();
+        window.draw(background);
+        window.draw(gameOverText);
+        window.draw(scoreText);
+        window.draw(stepsText);
+        window.draw(shortestPathText);
+        window.draw(statusLabel);
+        window.draw(pathStatusText);
+        window.draw(wordsTitle);
+
+        // Dessiner tous les mots collectés
+        for (const auto& wordText : wordTexts) {
+            window.draw(wordText);
+        }
+
+        window.display();
+    }
 }
 
-void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vector<string>& words) {
-    displayPath(maze, path); // Appel de la fonction displayPath
+void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, const vector<string>& words, const std::string& difficulty) {
+    bool followShortestPath = false; // Nouveau flag pour suivre le chemin le plus court
+    bool reachedEndPoint = false; // Nouveau flag pour vérifier si le joueur a atteint le point d'arrivée
+
+    displayPath(maze, shortestPath); // Appel de la fonction displayPath
     sf::RenderWindow window(sf::VideoMode(maze[0].size() * CELL_SIZE + 200, maze.size() * CELL_SIZE), "Labyrinthe SFML");
     sf::Font font;
     if (!font.loadFromFile(FONT_PATH)) {
@@ -387,6 +489,19 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
     float timeLimit = 120.0f; // 2 minutes
     float remainingTime = timeLimit;
 
+    // NEW: Bouton "Passer au chemin"
+    sf::RectangleShape togglePathButton(sf::Vector2f(180, 50)); // Taille du bouton
+    togglePathButton.setPosition(maze[0].size() * CELL_SIZE + 20, maze.size() * CELL_SIZE - 200); // Position du bouton
+    togglePathButton.setFillColor(sf::Color(100, 150, 200)); // Couleur du bouton (bleu clair)
+
+    // Texte du bouton "Passer au chemin"
+    sf::Text togglePathButtonText;
+    togglePathButtonText.setFont(font); // Utiliser la police chargée
+    togglePathButtonText.setString("Passer au chemin"); // Texte du bouton
+    togglePathButtonText.setCharacterSize(20); // Taille du texte
+    togglePathButtonText.setFillColor(sf::Color::White); // Couleur du texte
+    togglePathButtonText.setPosition(maze[0].size() * CELL_SIZE + 30, maze.size() * CELL_SIZE - 190); // Position du texte
+
     // NEW: Bouton de retour
     sf::RectangleShape backButton(sf::Vector2f(100, 50));
     backButton.setPosition(maze[0].size() * CELL_SIZE + 50, maze.size() * CELL_SIZE - 150);
@@ -399,22 +514,11 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
     backButtonText.setFillColor(sf::Color::White);
     backButtonText.setPosition(maze[0].size() * CELL_SIZE + 60, maze.size() * CELL_SIZE - 140);
 
-    // NEW: Score
-    int score = 0;
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-
-            // NEW: Gestion du bouton de retour
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (backButton.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
-                    window.close();
-                    // Ajouter ici le code pour retourner au menu principal
-                }
+                window.close(); // Fermer la fenêtre si l'événement "Closed" est détecté
             }
 
             // Only handle key events if game is not over
@@ -453,16 +557,16 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
                     int dx = 0, dy = 0;
                     switch (event.key.code) {
                         // Utilisation des touches fléchées pour les directions de base
-                    case sf::Keyboard::Up:    dx = -1; dy = 0; break;  // Haut
-                    case sf::Keyboard::Down:  dx = 1; dy = 0; break;   // Bas
-                    case sf::Keyboard::Left:  dx = 0; dy = -1; break;  // Gauche
-                    case sf::Keyboard::Right: dx = 0; dy = 1; break;   // Droite
+                    case sf::Keyboard::Z:    dx = -1; dy = 0; break;  // Haut
+                    case sf::Keyboard::S:  dx = 1; dy = 0; break;   // Bas
+                    case sf::Keyboard::Q:  dx = 0; dy = -1; break;  // Gauche
+                    case sf::Keyboard::D: dx = 0; dy = 1; break;   // Droite
 
                         // Utilisation d'autres touches pour les directions diagonales
-                    case sf::Keyboard::Q: dx = -1; dy = -1; break;  // Diagonale haut-gauche
+                    case sf::Keyboard::A: dx = -1; dy = -1; break;  // Diagonale haut-gauche
                     case sf::Keyboard::E: dx = -1; dy = 1; break;   // Diagonale haut-droite
-                    case sf::Keyboard::A: dx = 1; dy = -1; break;   // Diagonale bas-gauche
-                    case sf::Keyboard::D: dx = 1; dy = 1; break;    // Diagonale bas-droite
+                    case sf::Keyboard::W: dx = 1; dy = -1; break;   // Diagonale bas-gauche
+                    case sf::Keyboard::C: dx = 1; dy = 1; break;    // Diagonale bas-droite
 
                     default: break;
                     }
@@ -484,42 +588,44 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
                 }
             }
 
-            // Game over handling (unchanged)
-            if (gameOver && event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Enter) {
-                    if (playerPath.size() == path.size()) {
-                        cout << "Félicitations ! Vous avez trouvé le chemin le plus court !" << endl;
-                    }
-                    else {
-                        cout << "Vous n'avez pas trouvé le chemin le plus court. Essayez encore !" << endl;
-                        showShortestPath = true;
-                    }
-                }
-                else if (event.key.code == sf::Keyboard::Escape) {
-                    window.close();
+            // Gestion du clic sur le bouton "Passer au chemin"
+            if (event.type == sf::Event::MouseButtonPressed) {
+                if (togglePathButton.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                    followShortestPath = true; // Activer le suivi du chemin le plus court
+                    playerPos = findStartPoint(maze); // Rediriger le joueur au point de départ
+                    playerPath.clear(); // Réinitialiser le chemin du joueur
+                    playerPath.push_back(playerPos); // Ajouter la nouvelle position de départ
                 }
             }
         }
 
-        // NEW: Mise à jour du compte à rebours
+        // Mise à jour du compte à rebours et du score
         remainingTime = timeLimit - clock.getElapsedTime().asSeconds();
         if (remainingTime <= 0) {
             gameOver = true;
             remainingTime = 0;
         }
 
-        // NEW: Calcul du score
-        score = calculateScore(foundWords, path, playerPath);
+        // Vérifier si le joueur a atteint le point d'arrivée
+        if (playerPos == endPoint) {
+            reachedEndPoint = true;
+            score = calculateScore_words(foundWords, shortestPath, playerPath);
 
-        // NEW: Affichage du message de "Game Over" si le temps est écoulé
+            score = calculateScore_path(shortestPath, playerPath);
+            // Le joueur a atteint le point d'arrivée
+            gameOver = true; // Terminer le jeu
+        }
+
+        // Affichage du message de "Game Over" si le temps est écoulé ou si le joueur a atteint la fin
         if (gameOver) {
-            displayGameOver(window, font, score); // Afficher le message de fin de jeu avec le score
+            displayGameOver(window, font, score, foundWords, playerPath, shortestPath, reachedEndPoint);
             break; // Sortir de la boucle principale
         }
 
+        // Effacer la fenêtre une seule fois au début de la boucle de rendu
         window.clear(sf::Color::White);
 
-        // Draw the maze.
+        // Dessiner le labyrinthe
         for (int i = 0; i < maze.size(); ++i) {
             for (int j = 0; j < maze[0].size(); ++j) {
                 sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
@@ -548,56 +654,54 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
             }
         }
 
-        // Draw the player's path.
+        // Dessiner le chemin du joueur
         for (auto& pos : playerPath) {
             sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
             cell.setPosition(pos.second * CELL_SIZE, pos.first * CELL_SIZE);
-            // If the cell is part of the current word path, draw a darker green.
-            if (find(currentWordPath.begin(), currentWordPath.end(), pos) != currentWordPath.end()) {
-                cell.setFillColor(sf::Color(0, 128, 0, 128)); // Dark green semi-transparent
+            if (followShortestPath) {
+                cell.setFillColor(sf::Color(255, 0, 0, 128)); // Rouge semi-transparent pour le chemin suivi
+            }
+            else if (find(currentWordPath.begin(), currentWordPath.end(), pos) != currentWordPath.end()) {
+                cell.setFillColor(sf::Color(0, 128, 0, 128)); // Vert foncé semi-transparent
             }
             else {
-                cell.setFillColor(sf::Color(0, 255, 0, 128)); // Light green semi-transparent
+                cell.setFillColor(sf::Color(0, 255, 0, 128)); // Vert clair semi-transparent
             }
             window.draw(cell);
         }
 
-        // Highlight the current cell.
+        // Dessiner la cellule actuelle du joueur
         sf::RectangleShape currentCell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
         currentCell.setPosition(playerPos.second * CELL_SIZE, playerPos.first * CELL_SIZE);
-        currentCell.setFillColor(sf::Color(144, 238, 144, 200)); // More visible light green
+        currentCell.setFillColor(sf::Color(144, 238, 144, 200)); // Vert clair plus visible
         window.draw(currentCell);
 
-        // Draw the shortest path if needed.
-        if (showShortestPath) {
-            for (auto& pos : path) {
+        // Dessiner le chemin le plus court uniquement si le joueur a atteint le point d'arrivée
+        if (reachedEndPoint) {
+            for (auto& pos : shortestPath) {
                 pair<int, int> posPair = indexToPosition[pos];
                 sf::RectangleShape cell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
                 cell.setPosition(posPair.second * CELL_SIZE, posPair.first * CELL_SIZE);
-                cell.setFillColor(sf::Color(0, 0, 255, 128)); // Blue semi-transparent
+                cell.setFillColor(sf::Color(0, 0, 255, 128)); // Bleu semi-transparent
                 window.draw(cell);
             }
         }
 
-        // Draw the end cell.
+        // Dessiner la cellule de fin
         sf::RectangleShape endCell(sf::Vector2f(CELL_SIZE, CELL_SIZE));
         endCell.setPosition(endPoint.second * CELL_SIZE, endPoint.first * CELL_SIZE);
         endCell.setFillColor(sf::Color::Blue);
         window.draw(endCell);
 
-        // Charger l'image de fond
+        // Dessiner l'image de fond (si nécessaire)
         sf::Texture backgroundTexture;
-        if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) { // Remplacez par le chemin de votre image
-            cerr << "Erreur : Impossible de charger l'image de fond !" << endl;
-            return;
+        if (backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) {
+            sf::Sprite backgroundSprite(backgroundTexture);
+            backgroundSprite.setPosition(maze[0].size() * CELL_SIZE, 0);
+            window.draw(backgroundSprite);
         }
-        sf::Sprite backgroundSprite(backgroundTexture);
-        backgroundSprite.setPosition(maze[0].size() * CELL_SIZE, 0); // Positionner l'image à droite du labyrinthe
 
-        // Dessiner l'image de fond
-        window.draw(backgroundSprite);
-
-        // Display score and found words.
+        // Dessiner le score et les mots trouvés
         sf::Text scoreText;
         scoreText.setFont(font);
         scoreText.setString("Score: " + to_string(score));
@@ -618,52 +722,91 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& path, const vect
             yPos += 25;
         }
 
-        // Display the current word.
+        // Dessiner le mot actuel
         sf::Text currentWordText;
         currentWordText.setFont(font);
         currentWordText.setString("Mot actuel : " + currentWord);
         currentWordText.setCharacterSize(16);
         currentWordText.setFillColor(sf::Color::Black);
-        currentWordText.setPosition(maze[0].size() * CELL_SIZE + 10, maze.size() * CELL_SIZE - 80);
+        currentWordText.setPosition(maze[0].size() * CELL_SIZE + 10, maze.size() * CELL_SIZE - 100); // Ajusté pour l'espacement
         window.draw(currentWordText);
 
-        // NEW: Display the remaining time.
-        sf::Text timeText;
-        timeText.setFont(font);
-        timeText.setString("Temps restant : " + to_string((int)remainingTime) + "s");
-        timeText.setCharacterSize(16);
-        timeText.setFillColor(sf::Color::Black);
-        timeText.setPosition(maze[0].size() * CELL_SIZE + 10, maze.size() * CELL_SIZE - 50);
-        window.draw(timeText);
+        // Dessiner le temps restant uniquement en mode difficile
+        if (difficulty == "hard") {
+            sf::Text timeText;
+            timeText.setFont(font);
+            timeText.setString("Temps restant : " + to_string((int)remainingTime) + "s");
+            timeText.setCharacterSize(16);
+            timeText.setFillColor(sf::Color::Black);
+            timeText.setPosition(maze[0].size() * CELL_SIZE + 10, maze.size() * CELL_SIZE - 70); // Ajusté pour l'espacement
+            window.draw(timeText);
+        }
 
+        // Dessiner le bouton "Passer au chemin"
+        window.draw(togglePathButton);
+        window.draw(togglePathButtonText);
         // NEW: Draw the back button.
         window.draw(backButton);
         window.draw(backButtonText);
 
+        // Afficher la fenêtre
         window.display();
     }
 }
 
-// Fonction principale pour démarrer le jeu
-void startSFMLGame() {
+void startSFMLGame(const std::string& difficulty) {
     srand(time(0));
-    vector<string> words = readWordsFromFile("C:/Users/hp/Desktop/lybrinthe/lybrinthe/Ressources/doc.txt");
+    // Initialisation du générateur de nombres aléatoires
 
+    // Déterminer le fichier de mots en fonction de la difficulté
+    std::string wordFile;
+    if (difficulty == "easy") {
+        wordFile = "facile.txt";
+        cerr << " le texte de facile est lu !" << endl;
+    }
+    else if (difficulty == "medium") {
+        wordFile = "medium.txt";
+        cerr << " le texte de medium est lu !" << endl;
+    }
+    else if (difficulty == "hard") {
+        wordFile = "diff.txt";
+        cerr << " le texte de  difficile est lu !" << endl;
+    }
+    else {
+        wordFile = "medium.txt"; // Par défaut
+    }
+
+    // Lecture des mots depuis le fichier
+    vector<string> words = readWordsFromFile(wordFile);
+
+
+   
+
+    // Initialisation du labyrinthe
     int rows = 20, cols = 20;
     vector<vector<Cell>> maze(rows, vector<Cell>(cols, { WALL, ' ' }));
 
+    // Génération du labyrinthe
     maze[1][1].type = PATH;
     generateMaze(maze, 1, 1);
+
+    // Construction du graphe à partir du labyrinthe
     buildGraph(maze);
+
+    // Placement des mots dans le labyrinthe
     placeWords(maze, words);
 
+    // Trouver le point de départ et d'arrivée
     pair<int, int> startPoint = findStartPoint(maze);
     int start = positionToIndex[startPoint];
 
     pair<int, int> endPoint = findEndPoint(maze);
     int end = positionToIndex[endPoint];
 
+    // Calcul du chemin le plus court avec Dijkstra
     vector<int> shortestPath = dijkstra(start, end);
 
-    displayMaze(maze, shortestPath, words);
+    // Affichage du labyrinthe et lancement de la boucle SFML
+    displayMaze(maze, shortestPath, words, difficulty);
+
 }

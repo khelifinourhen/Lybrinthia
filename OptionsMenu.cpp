@@ -17,18 +17,18 @@ OptionsMenu::OptionsMenu(sf::RenderWindow& window) : window(window) {
     float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
     backgroundSprite.setScale(scaleX, scaleY);
 
-    // Configurer les textes des boutons
+    // Configurer les textes des boutons avec la même taille que MainMenu
     difficultyText.setFont(font);
     difficultyText.setString("Difficulty");
-    difficultyText.setCharacterSize(30);
+    difficultyText.setCharacterSize(50); // Taille de police identique à MainMenu
     difficultyText.setFillColor(WHITE);
     difficultyText.setPosition(SCREEN_WIDTH / 2 - difficultyText.getLocalBounds().width / 2, 200);
 
     backText.setFont(font);
     backText.setString("Back");
-    backText.setCharacterSize(30);
+    backText.setCharacterSize(50); // Taille de police identique à MainMenu
     backText.setFillColor(WHITE);
-    backText.setPosition(SCREEN_WIDTH / 2 - backText.getLocalBounds().width / 2, 250);
+    backText.setPosition(SCREEN_WIDTH / 2 - backText.getLocalBounds().width / 2, 300); // Ajuster la position verticale
 }
 
 std::string OptionsMenu::run() {

@@ -131,9 +131,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DifficultyMenu.cpp" />
-    <ClCompile Include="lybrinthe.cpp" />
+    <ClCompile Include="lybrinthia.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="OptionsMenu.cpp" />
+    <ClCompile Include="ScoreMenu.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,10 +142,23 @@
     <ClInclude Include="DifficultyMenu.hpp" />
     <ClInclude Include="OptionsMenu.hpp" />
     <ClInclude Include="mainMenu.hpp" />
+    <ClInclude Include="ScoreMenu.hpp" />
     <ClInclude Include="Test.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Ressources\doc.txt">
+    <Text Include="Ressources\diff.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="Ressources\facile.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </Text>
+    <Text Include="Ressources\medium.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

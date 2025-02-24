@@ -1,17 +1,21 @@
 #include "MainMenu.hpp"
 #include "Constants.hpp"
-#include "Test.hpp"
 #include <iostream>
+#include "ScoreMenu.hpp"
 
 MainMenu::MainMenu(sf::RenderWindow& window) : window(window) {
     // Charger la police
     if (!font.loadFromFile(FONT_PATH)) {
-        std::cerr << "Erreur : Impossible de charger la police." << std::endl;
+        std::cerr << "ERREUR: Impossible de charger la police." << std::endl;
     }
-    if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) {
-        std::cerr << "Erreur : Impossible de charger l'image de fond." << std::endl;
+
+    // Charger l'image de fond
+    if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) { // Chemin relatif
+        std::cerr << "ERREUR: Impossible de charger l'image de fond." << std::endl;
     }
     backgroundSprite.setTexture(backgroundTexture);
+
+    // Redimensionner l'image de fond
     sf::Vector2u textureSize = backgroundTexture.getSize();
     sf::Vector2u windowSize = window.getSize();
     float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
@@ -19,34 +23,25 @@ MainMenu::MainMenu(sf::RenderWindow& window) : window(window) {
     backgroundSprite.setScale(scaleX, scaleY);
 
     // Configurer les textes des boutons
-    startText.setFont(font);
-    startText.setString("Start Game");
-    startText.setCharacterSize(30);
-    startText.setFillColor(WHITE);
-    startText.setPosition(SCREEN_WIDTH / 2 - startText.getLocalBounds().width / 2, 200);
+    setupText(startText, "Start Game", 200);
+    setupText(optionsText, "Options", 300);
+    setupText(scoresText, "Scores", 400);
+    setupText(quitText, "Quit", 500);
+}
 
-    optionsText.setFont(font);
-    optionsText.setString("Options");
-    optionsText.setCharacterSize(30);
-    optionsText.setFillColor(WHITE);
-    optionsText.setPosition(SCREEN_WIDTH / 2 - optionsText.getLocalBounds().width / 2, 250);
-
-    scoresText.setFont(font);
-    scoresText.setString("Scores");
-    scoresText.setCharacterSize(30);
-    scoresText.setFillColor(WHITE);
-    scoresText.setPosition(SCREEN_WIDTH / 2 - scoresText.getLocalBounds().width / 2, 300);
-
-    quitText.setFont(font);
-    quitText.setString("Quit");
-    quitText.setCharacterSize(30);
-    quitText.setFillColor(WHITE);
-    quitText.setPosition(SCREEN_WIDTH / 2 - quitText.getLocalBounds().width / 2, 350);
+void MainMenu::setupText(sf::Text& text, const std::string& str, float yPos) {
+    text.setFont(font);
+    text.setString(str);
+    text.setCharacterSize(40); // Taille augmentée
+    text.setFillColor(sf::Color::White);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(
+        (window.getSize().x - text.getLocalBounds().width) / 2,
+        yPos
+    );
 }
 
 std::string MainMenu::run() {
-    std::string nextState = "main_menu";  // Initialisation de nextState
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -54,39 +49,21 @@ std::string MainMenu::run() {
                 return "quit";
             }
 
-            // Gestion des clics de souris
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    // Récupérer la position de la souris
-                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-                    if (startText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        std::cout << "Bouton Start Game cliqué" << std::endl;
-                        startSFMLGame();  // Lance l'interface SFML directement
-                    }
-
-                    // Retour au menu principal si l'utilisateur clique sur "Retour"
-                    if (nextState == "main_menu") {
-                        return "main_menu";
-                    }
-
-                    // Vérifier si la souris est sur le bouton "Options"
-                    if (optionsText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        std::cout << "Bouton Options cliqué" << std::endl;
-                        nextState = "options";  // Passer à l'écran des options
-                    }
-
-                    // Vérifier si la souris est sur le bouton "Scores"
-                    if (scoresText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        std::cout << "Bouton Scores cliqué" << std::endl;
-                        nextState = "scores";  // Passer à l'écran des scores
-                    }
-
-                    // Vérifier si la souris est sur le bouton "Quit"
-                    if (quitText.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                        std::cout << "Bouton Quit cliqué" << std::endl;
-                        return "quit";  // Quitter l'application
-                    }
+                if (startText.getGlobalBounds().contains(mousePos)) {
+                    return "start_game";
+                }
+                else if (optionsText.getGlobalBounds().contains(mousePos)) {
+                    return "options";
+                }
+                else if (scoresText.getGlobalBounds().contains(mousePos)) {
+                    ScoreMenu scoreMenu(window);
+                    scoreMenu.run();
+                }
+                else if (quitText.getGlobalBounds().contains(mousePos)) {
+                    return "quit";
                 }
             }
         }
@@ -94,13 +71,11 @@ std::string MainMenu::run() {
         draw();
         window.display();
     }
-    return "quit";  // Valeur par défaut en cas de fermeture
+    return "quit";
 }
 
 void MainMenu::draw() {
-    window.clear(BLACK);
-
-    // Afficher les textes des boutons
+    window.clear();
     window.draw(backgroundSprite);
     window.draw(startText);
     window.draw(optionsText);

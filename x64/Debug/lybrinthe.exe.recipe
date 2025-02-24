@@ -7,7 +7,13 @@
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\hp\source\repos\lybrinthe\lybrinthe\Ressources\doc.txt</FullPath>
+      <FullPath>C:\Users\hp\source\repos\lybrinthe\lybrinthe\Ressources\diff.txt</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hp\source\repos\lybrinthe\lybrinthe\Ressources\facile.txt</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\hp\source\repos\lybrinthe\lybrinthe\Ressources\medium.txt</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

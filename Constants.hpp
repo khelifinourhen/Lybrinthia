@@ -18,7 +18,7 @@ const sf::Color GRAY(128, 128, 128);
 const std::string FONT_PATH = "C:/Windows/Fonts/Arial.ttf";
 
 // Background image
-const std::string BACKGROUND_IMAGE_PATH = "C:/Users/hp/source/repos/lybrinthe/lybrinthe/essources/fond d'ecran.jpeg"; 
+const std::string BACKGROUND_IMAGE_PATH = "C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond d'ecran.jpeg"; 
 
 
 extern std::vector<std::string> words; // Liste de mots lus du fichier

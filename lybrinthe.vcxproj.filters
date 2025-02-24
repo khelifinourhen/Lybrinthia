@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lybrinthe.cpp">
+    <ClCompile Include="lybrinthia.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
@@ -28,6 +28,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreMenu.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,9 +50,18 @@
     <ClInclude Include="Test.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreMenu.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Ressources\doc.txt">
+    <Text Include="Ressources\medium.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Ressources\facile.txt">
+      <Filter>Fichiers de ressources</Filter>
+    </Text>
+    <Text Include="Ressources\diff.txt">
       <Filter>Fichiers de ressources</Filter>
     </Text>
   </ItemGroup>

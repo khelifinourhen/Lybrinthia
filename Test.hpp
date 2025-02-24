@@ -29,6 +29,6 @@ void placeWords(std::vector<std::vector<Cell>>& maze, const std::vector<std::str
 std::pair<int, int> findStartPoint(const std::vector<std::vector<Cell>>& maze);
 std::pair<int, int> findEndPoint(const std::vector<std::vector<Cell>>& maze);
 void displayMaze(const std::vector<std::vector<Cell>>& maze, const std::vector<std::pair<int, int>>& shortestPath, const std::vector<std::string>& validWords);
-void startSFMLGame();  // Fonction pour lancer l'interface SFML
+void startSFMLGame(const std::string& difficulty);  
 
 #endif

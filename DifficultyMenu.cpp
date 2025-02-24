@@ -1,44 +1,42 @@
 #include "DifficultyMenu.hpp"
 #include "Constants.hpp"
 #include <iostream>
-#include "mainMenu.hpp"
-#include "OptionsMenu.hpp"
 
-
-DifficultyMenu::DifficultyMenu(sf::RenderWindow& window)
-    : window(window)  // Correctement initialisé ici
-{
-
+DifficultyMenu::DifficultyMenu(sf::RenderWindow& window) : window(window) {
+    // Charger la police
     if (!font.loadFromFile(FONT_PATH)) {
-        std::cerr << "Erreur : Impossible de charger la police." << std::endl;
+        std::cerr << "ERREUR: Police introuvable a: " << FONT_PATH << std::endl;
     }
 
-    // Charger l'image de fond
-    if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) {
-        std::cerr << "Erreur : Impossible de charger l'image de fond." << std::endl;
+    // Charger l'arrière-plan
+    if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) { // Chemin relatif
+        std::cerr << "ERREUR: Image de fond introuvable" << std::endl;
     }
     backgroundSprite.setTexture(backgroundTexture);
 
-    // Redimensionner l'image de fond pour qu'elle remplisse la fenêtre
-    sf::Vector2u textureSize = backgroundTexture.getSize();
-    sf::Vector2u windowSize = window.getSize();
-    float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
-    float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-    backgroundSprite.setScale(scaleX, scaleY);
+    // Ajustement de la taille
+    backgroundSprite.setScale(
+        window.getSize().x / backgroundSprite.getLocalBounds().width,
+        window.getSize().y / backgroundSprite.getLocalBounds().height
+    );
 
-    // Configuration des boutons
-    setupText(easyText, "Easy", 200);
-    setupText(mediumText, "Medium", 250);
-    setupText(hardText, "Hard", 300);
-    setupText(backText, "Back", 350);
+    // Configuration des textes avec la même taille que MainMenu
+    setupText(easyText, "Facile", 200);
+    setupText(mediumText, "Moyen", 300);
+    setupText(hardText, "Difficile", 400);
+    setupText(backText, "Retour", 500);
 }
 
-void DifficultyMenu::setupText(sf::Text& text, const std::string& str, float yPosition) {
+void DifficultyMenu::setupText(sf::Text& text, const std::string& str, float yPos) {
     text.setFont(font);
     text.setString(str);
-    text.setCharacterSize(30);
+    text.setCharacterSize(50); 
     text.setFillColor(sf::Color::White);
-    text.setPosition(SCREEN_WIDTH / 2 - text.getLocalBounds().width / 2, yPosition);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(
+        (window.getSize().x - text.getLocalBounds().width) / 2,
+        yPos
+    );
 }
 
 std::string DifficultyMenu::run() {
@@ -49,23 +47,25 @@ std::string DifficultyMenu::run() {
                 return "quit";
             }
 
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            // Gestion des clics souris
+            if (event.type == sf::Event::MouseButtonPressed) {
+                sf::Vector2f mousePos = window.mapPixelToCoords(
+                    sf::Mouse::getPosition(window)
+                );
 
-                if (easyText.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                    std::cout << "Bouton Easy cliqué" << std::endl;
+                if (easyText.getGlobalBounds().contains(mousePos)) {
+                    easyText.setFillColor(sf::Color::Green);
                     return "easy";
                 }
-                if (mediumText.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                    std::cout << "Bouton Medium cliqué" << std::endl;
+                else if (mediumText.getGlobalBounds().contains(mousePos)) {
+                    mediumText.setFillColor(sf::Color::Yellow);
                     return "medium";
                 }
-                if (hardText.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                    std::cout << "Bouton Hard cliqué" << std::endl;
+                else if (hardText.getGlobalBounds().contains(mousePos)) {
+                    hardText.setFillColor(sf::Color::Red);
                     return "hard";
                 }
-                if (backText.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                    std::cout << "Bouton Back cliqué" << std::endl;
+                else if (backText.getGlobalBounds().contains(mousePos)) {
                     return "back";
                 }
             }
@@ -78,11 +78,10 @@ std::string DifficultyMenu::run() {
 }
 
 void DifficultyMenu::draw() {
-  
+    window.clear();
     window.draw(backgroundSprite);
     window.draw(easyText);
     window.draw(mediumText);
     window.draw(hardText);
     window.draw(backText);
-    
 }
