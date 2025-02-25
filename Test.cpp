@@ -12,6 +12,7 @@
 #include <ctime>
 #include "OptionsMenu.hpp"
 #include "Constants.hpp"
+//# define NULL 0
 using namespace std;
 int score=0;
 // Structure pour stocker les informations d'un nœud dans la file de priorité
@@ -22,19 +23,26 @@ struct Node {
         return distance > other.distance; // Pour avoir une file de priorité min
     }
 };
-
+std::vector<std::string> words;
 // Variables globales
 vector<vector<int>> adjacencyMatrix;
 map<pair<int, int>, int> positionToIndex;
 map<int, pair<int, int>> indexToPosition;
 
 // Fonction pour lire les mots depuis un fichier
-vector<string> readWordsFromFile(const string& filename) {
+vector<string> readWordsFromFile(string& filename) {
     ifstream file(filename.c_str());
+    if (!file.is_open()) {
+        cerr << "Erreur : Impossible d'ouvrir le fichier " << filename << endl;
+        return words;
+    }
+
     vector<string> words;
     string word;
     while (file >> word) {
         // Convertir le mot en minuscules
+        
+        
         transform(word.begin(), word.end(), word.begin(), ::tolower);
         words.push_back(word);
     }
@@ -64,6 +72,7 @@ void placeWords(vector<vector<Cell>>& maze, const vector<string>& words) {
         {0, -1}, {0, 1}, {-1, 0}, {1, 0},
         {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
     };
+    cerr << " words" << words.size() << endl;
 
     for (const string& word : words) {
         bool placed = false;
@@ -100,7 +109,7 @@ void placeWords(vector<vector<Cell>>& maze, const vector<string>& words) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             if (maze[i][j].type == PATH && maze[i][j].letter == ' ') {
-                maze[i][j].letter = 'a' + rand() % 26;
+                maze[i][j].letter = 'A' + rand() % 26;
 
             }
         }
@@ -333,10 +342,27 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
     const vector<FoundWord>& foundWords, const vector<pair<int, int>>& playerPath,
     const vector<int>& shortestPath, bool reachedEnd) {
 
+    // Charger la texture de l'arrière-plan
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/fond_ecran.jpeg")) {
+        std::cerr << "ERREUR: Image de fond introuvable" << std::endl;
+        return; // Quitter la fonction si l'image ne peut pas être chargée
+    }
+
+    // Créer un sprite pour l'arrière-plan
+    sf::Sprite backgroundSprite;
+    backgroundSprite.setTexture(backgroundTexture);
+
+    // Ajuster la taille du sprite pour qu'il corresponde à la taille de la fenêtre
+    backgroundSprite.setScale(
+        window.getSize().x / backgroundSprite.getLocalBounds().width,
+        window.getSize().y / backgroundSprite.getLocalBounds().height
+    );
+
     // Créer un rectangle pour l'arrière-plan du message
-    sf::RectangleShape background(sf::Vector2f(600, 500));
-    background.setFillColor(sf::Color(0, 0, 0, 230)); // Noir plus opaque
-    background.setPosition(window.getSize().x / 2 - 300, window.getSize().y / 2 - 250);
+    sf::RectangleShape messageBackground(sf::Vector2f(600, 500));
+    messageBackground.setFillColor(sf::Color(0, 0, 0, 230)); // Noir plus opaque
+    messageBackground.setPosition(window.getSize().x / 2 - 300, window.getSize().y / 2 - 250);
 
     // Texte "Game Over"
     sf::Text gameOverText;
@@ -404,7 +430,6 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
     // Positionner le texte de statut juste après le label avec un petit espace
     pathStatusText.setPosition(window.getSize().x / 2 - 250 + labelWidth + 10, window.getSize().y / 2 + 2);
 
-
     // Mots collectés
     sf::Text wordsTitle;
     wordsTitle.setFont(font);
@@ -440,7 +465,8 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
         }
 
         window.clear();
-        window.draw(background);
+        window.draw(backgroundSprite); // Dessiner l'arrière-plan
+        window.draw(messageBackground); // Dessiner le fond du message
         window.draw(gameOverText);
         window.draw(scoreText);
         window.draw(stepsText);
@@ -458,7 +484,7 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
     }
 }
 
-void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, const vector<string>& words, const std::string& difficulty) {
+void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, const std::vector<std::string>& words, const std::string& difficulty) {
     bool followShortestPath = false; // Nouveau flag pour suivre le chemin le plus court
     bool reachedEndPoint = false; // Nouveau flag pour vérifier si le joueur a atteint le point d'arrivée
 
@@ -753,7 +779,6 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, co
         window.display();
     }
 }
-
 void startSFMLGame(const std::string& difficulty) {
     srand(time(0));
     // Initialisation du générateur de nombres aléatoires
@@ -762,18 +787,18 @@ void startSFMLGame(const std::string& difficulty) {
     std::string wordFile;
     if (difficulty == "easy") {
         wordFile = "facile.txt";
-        cerr << " le texte de facile est lu !" << endl;
+        cerr << " le texte de facile est lu !" << wordFile << endl;
     }
     else if (difficulty == "medium") {
-        wordFile = "medium.txt";
+        wordFile = "C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/medium.txt";
         cerr << " le texte de medium est lu !" << endl;
     }
     else if (difficulty == "hard") {
-        wordFile = "diff.txt";
+        wordFile = "C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/diff.txt";
         cerr << " le texte de  difficile est lu !" << endl;
     }
     else {
-        wordFile = "medium.txt"; // Par défaut
+        wordFile = "C:/Users/hp/source/repos/lybrinthe/lybrinthe/Ressources/medium.txt"; // Par défaut
     }
 
     // Lecture des mots depuis le fichier

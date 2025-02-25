@@ -30,5 +30,6 @@ std::pair<int, int> findStartPoint(const std::vector<std::vector<Cell>>& maze);
 std::pair<int, int> findEndPoint(const std::vector<std::vector<Cell>>& maze);
 void displayMaze(const std::vector<std::vector<Cell>>& maze, const std::vector<std::pair<int, int>>& shortestPath, const std::vector<std::string>& validWords);
 void startSFMLGame(const std::string& difficulty);  
+extern std::vector<std::string> words; 
 
 #endif
