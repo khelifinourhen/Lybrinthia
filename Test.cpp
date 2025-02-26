@@ -359,19 +359,21 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
         window.getSize().y / backgroundSprite.getLocalBounds().height
     );
 
-    // Créer un rectangle pour l'arrière-plan du message
+    // Créer un rectangle pour l'arrière-plan du message avec une bordure
     sf::RectangleShape messageBackground(sf::Vector2f(600, 500));
-    messageBackground.setFillColor(sf::Color(0, 0, 0, 230)); // Noir plus opaque
+    messageBackground.setFillColor(sf::Color(0xD0, 0xB9, 0x70, 230)); // Couleur #d0b970 avec opacité
+    messageBackground.setOutlineThickness(5);
+    messageBackground.setOutlineColor(sf::Color::White);
     messageBackground.setPosition(window.getSize().x / 2 - 300, window.getSize().y / 2 - 250);
 
-    // Texte "Game Over"
+    // Texte "Game Over" avec une ombre
     sf::Text gameOverText;
     gameOverText.setFont(font);
     gameOverText.setString("Game Over!");
-    gameOverText.setCharacterSize(50);
+    gameOverText.setCharacterSize(60);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setStyle(sf::Text::Bold);
-    gameOverText.setPosition(window.getSize().x / 2 - 120, window.getSize().y / 2 - 220);
+    gameOverText.setPosition(window.getSize().x / 2 - gameOverText.getLocalBounds().width / 2, window.getSize().y / 2 - 220);
 
     // Score final
     sf::Text scoreText;
@@ -379,56 +381,20 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
     scoreText.setString("Score Final: " + to_string(score));
     scoreText.setCharacterSize(30);
     scoreText.setFillColor(sf::Color::White);
-    scoreText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 150);
+    scoreText.setPosition(window.getSize().x / 2 - scoreText.getLocalBounds().width / 2, window.getSize().y / 2 - 150);
 
-    // Nombre de pas
-    sf::Text stepsText;
-    stepsText.setFont(font);
-    stepsText.setString("Nombre de pas: " + to_string(playerPath.size()));
-    stepsText.setCharacterSize(30);
-    stepsText.setFillColor(sf::Color::White);
-    stepsText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 100);
+    
+    sf::Text congratsText;
+    congratsText.setFont(font);
+    congratsText.setString("Félicitations !");
+    congratsText.setCharacterSize(40);
+    congratsText.setFillColor(sf::Color::Cyan);
+    congratsText.setStyle(sf::Text::Bold);
+    congratsText.setPosition(window.getSize().x / 2 - congratsText.getLocalBounds().width / 2, window.getSize().y / 2 - 50);
 
-    // Longueur du chemin le plus court
-    sf::Text shortestPathText;
-    shortestPathText.setFont(font);
-    shortestPathText.setString("Longueur du chemin optimal: " + to_string(shortestPath.size()));
-    shortestPathText.setCharacterSize(30);
-    shortestPathText.setFillColor(sf::Color::White);
-    shortestPathText.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 - 50);
-
-    // Label "Status du chemin"
-    sf::Text statusLabel;
-    statusLabel.setFont(font);
-    statusLabel.setString("Status du chemin: ");
-    statusLabel.setCharacterSize(30);
-    statusLabel.setFillColor(sf::Color::White);
-    statusLabel.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2);
-
-    // Statut du chemin (résultat)
-    sf::Text pathStatusText;
-    pathStatusText.setFont(font);
-    string pathStatus;
-    if (reachedEnd) {
-        if (playerPath.size() == shortestPath.size()) {
-            pathStatus = "Optimal !";
-            pathStatusText.setFillColor(sf::Color::Green);
-        }
-        else {
-            pathStatus = "Non optimal";
-            pathStatusText.setFillColor(sf::Color::Yellow);
-        }
-    }
-    else {
-        pathStatus = "Non atteint";
-        pathStatusText.setFillColor(sf::Color::Red);
-    }
-    pathStatusText.setString(pathStatus);
-    pathStatusText.setCharacterSize(30); // Même taille que les autres textes
-    // Calculer la position du statusLabel pour obtenir sa largeur
-    float labelWidth = statusLabel.getLocalBounds().width;
-    // Positionner le texte de statut juste après le label avec un petit espace
-    pathStatusText.setPosition(window.getSize().x / 2 - 250 + labelWidth + 10, window.getSize().y / 2 + 2);
+    // Animation du texte de félicitations
+    sf::Clock animationClock; // Pour gérer l'animation
+    bool showCongratsText = true; // Pour faire clignoter le texte
 
     // Mots collectés
     sf::Text wordsTitle;
@@ -452,15 +418,56 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
         yOffset += 30;
     }
 
+    // Boutons
+    sf::RectangleShape restartButton(sf::Vector2f(200, 50));
+    restartButton.setFillColor(sf::Color::Green);
+    restartButton.setPosition(window.getSize().x / 2 - 250, window.getSize().y / 2 + 300);
+
+    sf::Text restartText;
+    restartText.setFont(font);
+    restartText.setString("Redémarrer");
+    restartText.setCharacterSize(25);
+    restartText.setFillColor(sf::Color::White);
+    restartText.setPosition(restartButton.getPosition().x + 50, restartButton.getPosition().y + 10);
+
+    sf::RectangleShape quitButton(sf::Vector2f(200, 50));
+    quitButton.setFillColor(sf::Color::Red);
+    quitButton.setPosition(window.getSize().x / 2 + 50, window.getSize().y / 2 + 300);
+
+    sf::Text quitText;
+    quitText.setFont(font);
+    quitText.setString("Quitter");
+    quitText.setCharacterSize(25);
+    quitText.setFillColor(sf::Color::White);
+    quitText.setPosition(quitButton.getPosition().x + 60, quitButton.getPosition().y + 10);
+
     bool isClosed = false;
 
     while (!isClosed) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed ||
-                event.type == sf::Event::KeyPressed) {
+            if (event.type == sf::Event::Closed) {
                 window.close();
                 isClosed = true;
+            }
+            else if (event.type == sf::Event::MouseButtonPressed) {
+                sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                if (restartButton.getGlobalBounds().contains(mousePos)) {
+                    // Redémarrer le jeu
+                    isClosed = true;
+                }
+                else if (quitButton.getGlobalBounds().contains(mousePos)) {
+                    window.close();
+                    isClosed = true;
+                }
+            }
+        }
+
+        // Gestion de l'animation du texte de félicitations
+        if (reachedEnd && playerPath.size() == shortestPath.size()) {
+            if (animationClock.getElapsedTime().asSeconds() > 0.5f) { // Clignotement toutes les 0.5 secondes
+                showCongratsText = !showCongratsText; // Inverser l'état du texte
+                animationClock.restart(); // Redémarrer le chronomètre
             }
         }
 
@@ -469,10 +476,12 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
         window.draw(messageBackground); // Dessiner le fond du message
         window.draw(gameOverText);
         window.draw(scoreText);
-        window.draw(stepsText);
-        window.draw(shortestPathText);
-        window.draw(statusLabel);
-        window.draw(pathStatusText);
+        
+        // Afficher le texte de félicitations si le chemin est optimal
+        if (reachedEnd && playerPath.size() == shortestPath.size() && showCongratsText) {
+            window.draw(congratsText);
+        }
+
         window.draw(wordsTitle);
 
         // Dessiner tous les mots collectés
@@ -480,10 +489,17 @@ void displayGameOver(sf::RenderWindow& window, const sf::Font& font, int score,
             window.draw(wordText);
         }
 
+        // Dessiner les boutons
+        window.draw(restartButton);
+     
+        window.draw(congratsText);
+        window.draw(restartText);
+        window.draw(quitButton);
+        window.draw(quitText);
+
         window.display();
     }
 }
-
 void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, const std::vector<std::string>& words, const std::string& difficulty) {
     bool followShortestPath = false; // Nouveau flag pour suivre le chemin le plus court
     bool reachedEndPoint = false; // Nouveau flag pour vérifier si le joueur a atteint le point d'arrivée
@@ -512,7 +528,7 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, co
 
     // NEW: Compte à rebours
     sf::Clock clock;
-    float timeLimit = 120.0f; // 2 minutes
+    float timeLimit = 160.0f; // 3minutes
     float remainingTime = timeLimit;
 
     // NEW: Bouton "Passer au chemin"
@@ -624,27 +640,30 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, co
                 }
             }
         }
-
+        
         // Mise à jour du compte à rebours et du score
         remainingTime = timeLimit - clock.getElapsedTime().asSeconds();
+        if (difficulty== "hard") {
         if (remainingTime <= 0) {
             gameOver = true;
             remainingTime = 0;
+        }
         }
 
         // Vérifier si le joueur a atteint le point d'arrivée
         if (playerPos == endPoint) {
             reachedEndPoint = true;
-            score = calculateScore_words(foundWords, shortestPath, playerPath);
-
-            score = calculateScore_path(shortestPath, playerPath);
+            
             // Le joueur a atteint le point d'arrivée
             gameOver = true; // Terminer le jeu
         }
 
         // Affichage du message de "Game Over" si le temps est écoulé ou si le joueur a atteint la fin
         if (gameOver) {
+            score = calculateScore_words(foundWords, shortestPath, playerPath);
+            score = calculateScore_path(shortestPath, playerPath);
             displayGameOver(window, font, score, foundWords, playerPath, shortestPath, reachedEndPoint);
+
             break; // Sortir de la boucle principale
         }
 
@@ -673,7 +692,7 @@ void displayMaze(vector<vector<Cell>>& maze, const vector<int>& shortestPath, co
                     text.setFont(font);
                     text.setString(maze[i][j].letter);
                     text.setCharacterSize(FONT_SIZE);
-                    text.setFillColor(sf::Color::Red);
+                    text.setFillColor(sf::Color::Black);
                     text.setPosition(j * CELL_SIZE + 5, i * CELL_SIZE + 5);
                     window.draw(text);
                 }
@@ -808,6 +827,7 @@ void startSFMLGame(const std::string& difficulty) {
    
 
     // Initialisation du labyrinthe
+    
     int rows = 20, cols = 20;
     vector<vector<Cell>> maze(rows, vector<Cell>(cols, { WALL, ' ' }));
 

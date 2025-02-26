@@ -1,5 +1,4 @@
 #include "ScoreMenu.hpp"
-
 #include "Constants.hpp"
 #include <fstream>
 #include <iostream>
